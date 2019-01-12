@@ -15,7 +15,6 @@ font-size: 40px;
 span{
   font-size: 24px;
   display: block;
-  v
 }
 `
 const LightText = styled.div`
