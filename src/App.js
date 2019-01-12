@@ -3,17 +3,49 @@ import logo from './logo.svg';
 import './App.css';
 
 import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-
 import styled from 'styled-components'
 
+import Header from './components/Header'
+import Main from './components/Main'
+import Menu from './components/Menu'
+const urlBG = process.env.PUBLIC_URL + '/img/bg.jpg'
+const HeaderWrapper = styled.header`
+width:100%
+height: 49px;
+background-color: #242424;
+opacity: 0.8;
+`
+const MenuWrapper = styled.div`
+height: 89px;
+padding-top: 20px;
+`
+const MainWrapper = styled.main`
+  padding-top: 130px;
+  height: 600px;
+  background: url(${urlBG}) no-repeat center;
+  bacground-size: cover;
+`
 class App extends Component {
   render() {
     return (
-      <div className="wrapper">
-        <HelloWord productName="React.js"/>
-        <SayFullName name="Evgeny" surname="Yakushenko" link="vk.com"/>
+      <div className="App">
+      <HeaderWrapper>
+        <Grid>
+         <Header/>
+      </Grid>
+      </HeaderWrapper>
+      <MenuWrapper>
+        <Grid>
+          <Menu/>
+        </Grid>
+      </MenuWrapper>
+       
+        <MainWrapper>
+          <Grid>
+            <Main/>
+          </Grid>
+        </MainWrapper>
+        
       </div>
     );
   }
@@ -22,20 +54,6 @@ class App extends Component {
 
 
 
-function SayFullName(props){
-  return (
-    <div>
-      <h2> Моё имя {props.name}, фамилия - {props.surname}</h2>
-      <a href={props.link}> Ссылка на мой профиль</a>
-    </div>
-  )
-}
-
-function HelloWord(props){
-  return(
-    <h1>Hellow {props.productName} word!</h1>
-  )
-}
 
 
 export default App;

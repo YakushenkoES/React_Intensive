@@ -1,3 +1,16 @@
+## Theory
+Компоненты и реквизиты — [КЛИК](https://reactjs.org/docs/components-and-props.html)
+Шаблонные строки — [КЛИК](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/template_strings)
+
+ES6 классы — [КЛИК](http://jsraccoon.ru/es6-classes)
+
+ReactJS
+React-Bootstrap 
+Styled Components 
+
+
+Курс по Git — КЛИК
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
