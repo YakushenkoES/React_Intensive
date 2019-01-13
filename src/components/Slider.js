@@ -33,7 +33,6 @@ class Slider extends React.Component{
     this.state.max = this.state.slides.length;
     this.intervalBetweenSlides = this.intervalBetweenSlides.bind(this);
     this.toggleAutoplay = this.toggleAutoplay.bind(this);
-    this.xxx = this.xxx.bind(this);
 
     this.nextOne = this.nextOne.bind(this);
     this.prevOne = this.prevOne.bind(this);
@@ -60,25 +59,17 @@ class Slider extends React.Component{
   }
 
  toggleAutoplay(){
-    console.log('toggleAutoplay');
     this.setState({
       autoplay: !this.state.autoplay
     })
   }
-  xxx(){
-    console.log('xxx');
-    this.setState({
-      autoplay: !this.state.autoplay
-    })
-  }
+ 
   nextOne(){
-    console.log('nextOne');
     (this.state.active < this.state.max -1)?
     this.setState({active: this.state.active + 1}):
     this.setState({active: 0})
   }
   prevOne(){
-    console.log('prevOne');
     (this.state.active > 0)?
     this.setState({active: this.state.active - 1}):
     this.setState({active: this.state.max - 1})
