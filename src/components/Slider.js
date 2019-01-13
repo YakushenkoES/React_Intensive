@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-
-import styled from 'styled-components'
-
-import Slide_1 from '../img/slide-1.jpg'
-import Slide_2 from '../img/slide-2.jpg'
-import Slide_3 from '../img/slide-3.jpg'
-import Slide_4 from '../img/slide-4.jpg'
+import Slide_1 from '../img/slide-1.jpg';
+import Slide_2 from '../img/slide-2.jpg';
+import Slide_3 from '../img/slide-3.jpg';
+import Slide_4 from '../img/slide-4.jpg';
 
 class Slider extends React.Component{
 
   constructor(props){
     super(props);
+   
     this.state = {
       slides: [
         {
@@ -29,54 +25,63 @@ class Slider extends React.Component{
           eachSlide: `url(${Slide_4})`
         }
       ],
-
       autoplay: false,
       active: 0,
       max: 0
-    }
+    };
 
     this.state.max = this.state.slides.length;
     this.intervalBetweenSlides = this.intervalBetweenSlides.bind(this);
     this.toggleAutoplay = this.toggleAutoplay.bind(this);
+    this.xxx = this.xxx.bind(this);
+
     this.nextOne = this.nextOne.bind(this);
     this.prevOne = this.prevOne.bind(this);
   }
 
   componentDidMount(){
-    this.interval = setInterval(() => intervalBetweenSlides(), 3000);
+    this.interval = setInterval(() => this.intervalBetweenSlides(), 3000)
   }
 
   componentWillUnmount(){
-    clearInterval(this.interval);
+    clearInterval(this.interval)
   }
 
   intervalBetweenSlides(){
     if(this.state.autoplay === true){
-      if(this.state.active === this.state.max-1){
-        this.state.active=0;
+      if(this.state.active === this.state.max - 1){
+        this.state.active = 0;//this.setState({active: 0})
       }
       else{
-        this.active++;
+        this.state.active++;// = this.state.active + 1;//this.setState({active: this.state.active + 1})
       }
-      this.setState({active: this.state.active
-      })
+      this.setState({active: this.state.active})
     }
   }
 
-  toggleAutoplay(){
+ toggleAutoplay(){
+    console.log('toggleAutoplay');
+    this.setState({
+      autoplay: !this.state.autoplay
+    })
+  }
+  xxx(){
+    console.log('xxx');
     this.setState({
       autoplay: !this.state.autoplay
     })
   }
   nextOne(){
+    console.log('nextOne');
     (this.state.active < this.state.max -1)?
-    this.state.setState({active: this.state.active + 1}):
-    this.state.setState({active: 0})
+    this.setState({active: this.state.active + 1}):
+    this.setState({active: 0})
   }
   prevOne(){
+    console.log('prevOne');
     (this.state.active > 0)?
-    this.state.setState({active: this.state.active - 1}):
-    this.state.setState({active: this.state.max - 1})
+    this.setState({active: this.state.active - 1}):
+    this.setState({active: this.state.max - 1})
   }
 
   dots(index, event){
@@ -91,7 +96,99 @@ class Slider extends React.Component{
     }
   }
 
+  setSliderStyles(){
+    const transition = this.state.active * ( - 100 )/this.state.slides.length;
+    return{
+      width: (this.state.slides.length * 100) + '%',
+      transform: `translateX(${transition}%)`
+    }
+  }
+
+  renderSlides(){
+    const wd = 100 /this.state.slides.length + "%";
+
+    return this.state.slides.map((_slide, index) => (
+      <div 
+        className="each-slide"
+        key={index}
+        style={{backgroundImage:_slide.eachSlide, width: wd}}>
+      </div>
+    ) )
+  }
+
+  renderDots(){
+    return this.state.slides.map((_slide, index)=>(
+      <li
+        className={this.isActive(index) + ' dots'}
+        key={index} 
+        ref="dots"
+        onClick={this.dots.bind(this, index)}>
+        <a>&#9679;</a>
+      </li>
+    ))
+  }
+
+  renderPlayStop(){
+    let playStop;
+
+    if(this.state.autoplay){
+      playStop=<svg fill='#FFFFFF' height='24' viewBox='0 0 24 24' width='24'>
+                  <path d='M0 0h24v24H0z' fill='none'/>
+                  <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z'/>
+              </svg>;
+    }
+    else{
+      playStop =<svg fill='#FFFFFF' height='24' viewBox='0 0 24 24' width='24'>
+                  <path d='M0 0h24v24H0z' fill='none'/>
+                  <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z'/>
+              </svg>;
+    }
+    return playStop;
+  }
+
+  renderArrows(){
+    return(
+      <div>
+        <button type="button" className="arrows prev" onClick={this.prevOne}>
+          <svg fill='#FFFFFF' width='50' height='50' viewBox='0 0 24 24'>
+              <path d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'/>
+              <path d='M0 0h24v24H0z' fill='none'/>
+          </svg>
+        </button>
+        <button type="button" className="arrows next" onClick={this.nextOne}>
+          <svg fill='#FFFFFF' height='50' viewBox='0 0 24 24' width='50'>
+            <path d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/>
+            <path d='M0 0h24v24H0z' fill='none'/>
+        </svg>
+        </button>
+      </div>
+    )
+  }
+
   render(){
-    return()
+    return(
+      <div className="slider">
+      
+        <div 
+          className="wrapper"
+          style={this.setSliderStyles()}>
+
+          {this.renderSlides()}
+        </div>
+
+        {this.renderArrows()}
+
+        <ul className="dots-container">
+          {this.renderDots()}
+        </ul>
+
+        <a className="toggle-play" onClick={this.toggleAutoplay}>
+          {this.renderPlayStop()}
+        </a>
+      </div>
+
+    )
   }
 }
+
+export default Slider
